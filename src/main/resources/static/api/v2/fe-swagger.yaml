@@ -1,0 +1,76 @@
+swagger: '2.0'
+info:
+  description: Simple API to explore the world of pokemon.
+  version: 1.0.0
+  title: Swagger Pokemon Information
+host: localhost
+basePath: /api/v1
+tags:
+  - name: pokemon
+    description: Pokemon info
+schemes:
+  - http
+paths:
+  /pokemon/{pokemonName}:
+    get:
+      tags:
+        - pokemon
+      summary: Get pokemon base information by pokemon name
+      description: ''
+      operationId: getPokemonBaseInfo
+      produces:
+        - application/json
+      parameters:
+        - name: pokemonName
+          in: path
+          description: The base info details of the pokemon
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Pokemon'
+        '400':
+          description: Invalid pokemon name supplied
+        '404':
+          description: Pokemon not found
+  /pokemon/translated/{pokemonName}:
+    get:
+      tags:
+        - pokemon
+      summary: Get pokemon base information by pokemon name
+      description: ''
+      operationId: getPokemonTranslatedInfo
+      produces:
+        - application/json
+      parameters:
+        - name: pokemonName
+          in: path
+          description: The translated info details of the pokemon
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Pokemon'
+        '400':
+          description: Invalid pokemon name supplied
+        '404':
+          description: Pokemon not found
+definitions:
+  Pokemon:
+    type: object
+    properties:
+      name:
+        type: string
+      description:
+        type: string
+      habitat:
+        type: string
+      isLegendary:
+        type: boolean
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io

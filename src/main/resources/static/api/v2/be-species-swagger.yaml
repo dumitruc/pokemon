@@ -1,0 +1,36 @@
+swagger: '2.0'
+info:
+  description: Pokemon API for pokemon species
+  version: 2.0.0
+  title: Swagger Pokemon Species
+host: pokeapi.co
+basePath: /api/v2/
+paths:
+  /pokemon-species/{name}:
+    get:
+      tags:
+        - pokemon
+      summary: Get pokemon species information by name
+      description: ''
+      operationId: getPokemonBaseInfo
+      produces:
+        - application/json
+      parameters:
+        - name: name
+          in: path
+          description: The base info details of the pokemon
+          required: true
+          type: string
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/response'
+        '400':
+          description: Invalid pokemon name supplied
+        '404':
+          description: Pokemon not found
+definitions:
+  response:
+    type: string
+
