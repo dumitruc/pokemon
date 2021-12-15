@@ -1,23 +1,16 @@
 package com.dumitruc.training.pokemon.model;
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class PokemonSummary {
 
-    @JsonProperty("name")
     String name;
-
     String description;
-
-    @JsonProperty("habitat")
     String habitat;
-
-    @JsonProperty("is_legendary")
     Boolean isLegendary;
 
 
-    public PokemonSummary() {}
+    public PokemonSummary() {
+    }
 
     public PokemonSummary(String name, String description, String habitat, Boolean isLegendary) {
         this.name = name;
@@ -54,7 +47,7 @@ public class PokemonSummary {
         return isLegendary;
     }
 
-    public void setIsLegendary(Boolean isLegendary) {
-        this.isLegendary = isLegendary;
+    public void setLegendary(Boolean legendary) {
+        isLegendary = legendary;
     }
 }

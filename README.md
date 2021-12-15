@@ -6,6 +6,9 @@ Project init using spring boot [initializr](https://start.spring.io/).
  ## Hide full error stack
 Hide error details when it occurs. 
 
+# Decisions
+ ## Move from JAKSON to GSON library
+As it stand there is no simple clean way to ignore JSON fields dynamically using jakson, we'll have to either implement a viewer or explicitly list the fields to be excluded. Since most of the fields from the response I'm excluding I'm more interested in a dynamic exclussion strategy gson offers that. 
 
 # Production consideration
  ## Revisit the spring boot setup

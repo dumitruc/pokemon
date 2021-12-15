@@ -28,7 +28,13 @@ public class PokemonController {
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping("/pokemon/{name}")
     public PokemonSummary pokemonInfo(@NotNull @PathVariable String name) {
-        PokemonSummary pokemonSummary = pokemonInfoService.extractPokemon(name);
+        PokemonSummary pokemonSummary = null;
+        // TODO: 14/12/2021 Implement proper error handling
+        try {
+            pokemonSummary = pokemonInfoService.extractPokemon(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return pokemonSummary;
     }
 

@@ -1,12 +1,12 @@
 package com.dumitruc.training.pokemon.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.gson.annotations.SerializedName;
 
 public class Language {
 
-    @JsonProperty("name")
+    @SerializedName("name")
     String name;
-    @JsonProperty("url")
+    @SerializedName("url")
     String url;
 
     public Language() {

@@ -1,62 +1,46 @@
 package com.dumitruc.training.pokemon.services;
 
+import com.dumitruc.training.pokemon.DeserializerPokemonSummary;
 import com.dumitruc.training.pokemon.model.PokemonSummary;
-import com.dumitruc.training.pokemon.model.VersionGroupFlavorText;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+
+import java.net.URI;
 
 @Service
-public class PokemonInfoServiceImpl implements PokemonInfoService{
+public class PokemonInfoServiceImpl implements PokemonInfoService {
 
     @Value("${pokemon.details.external.service}")
     private String externalUrl;
 
+    @Autowired
+    ExternalCallsService externalCallsService;
+
+    @Autowired
+    GsonBuilder gsonBuilder;
+
+    @Autowired
+    DeserializerPokemonSummary deserializerPokemonSummary;
+
     @Override
-    public PokemonSummary extractPokemon(String name){
+    public PokemonSummary extractPokemon(String name) throws Exception {
 
-        //Suicune
-        //Corean
+        URI url = new URI(externalUrl + "/" + name.toLowerCase());
+        String response = externalCallsService.getUrl(url);
+        PokemonSummary pokemonSummary = mapToPokemonSummary(response);
 
-        //https://pokeapi.co/docs/v2#pokemon-species
+        return pokemonSummary;
+    }
 
-        RestTemplate restTemplate = new RestTemplate();
-        String response = restTemplate.getForObject(externalUrl+"/"+ name.toLowerCase(), String.class);
+    private PokemonSummary mapToPokemonSummary(String response) {
 
+        gsonBuilder.registerTypeAdapter(PokemonSummary.class, deserializerPokemonSummary);
 
-
-        ObjectMapper mapper = new ObjectMapper();
-
-        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-
-        JsonNode jsonNode = null;
-        String pokemonName = null;
-        String flavorText = null;
-        String habitat = null;
-        Boolean isLegendary = null;
-        try {
-            jsonNode = mapper.readTree(response);
-            pokemonName  = jsonNode.get("name").asText();
-            flavorText  = jsonNode.get("flavor_text_entries").get(0).get("flavor_text").asText();
-
-            JsonNode flavorTextEntries = jsonNode.get("flavor_text_entries");
-
-            VersionGroupFlavorText[] flavorEvents = mapper.readValue(flavorTextEntries.toPrettyString(), VersionGroupFlavorText[].class);
-
-            habitat  = jsonNode.get("habitat").asText();
-            isLegendary  = jsonNode.get("is_legendary").asBoolean();
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-
-        PokemonSummary pokemonSummary = new PokemonSummary(pokemonName, flavorText, habitat, isLegendary);
-
+        Gson customGson = gsonBuilder.create();
+        PokemonSummary pokemonSummary = customGson.fromJson(response, PokemonSummary.class);
 
         return pokemonSummary;
     }

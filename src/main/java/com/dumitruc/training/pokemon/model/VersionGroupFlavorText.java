@@ -1,20 +1,33 @@
 package com.dumitruc.training.pokemon.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.JsonNode;
+
+import com.google.gson.annotations.SerializedName;
 
 public class VersionGroupFlavorText {
 
-    @JsonProperty("flavor_text")
-    String flavorText;
+    @SerializedName("flavor_text")
+    private String flavorText;
 
-    @JsonProperty("language")
-    Language language;
-
-    @JsonProperty("version")
-    JsonNode version;
-
+    @SerializedName("language")
+    private Language language;
 
     public VersionGroupFlavorText() {
     }
+
+    public String getFlavorText() {
+        return flavorText;
+    }
+
+    public void setFlavorText(String flavorText) {
+        this.flavorText = flavorText;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
 }

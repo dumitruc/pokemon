@@ -50,19 +50,23 @@ class PokemonControllerTests {
                 .perform(get("/pokemon/mewtwo"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"description\":\"mew two description\",\"legendary\":false,\"name\":\"mewtwo\",\"habitat\":\"unknown\",\"is_legendary\":false}"));
+                .andExpect(content().json("{" +
+                        "\"description\":\"mew two description\"," +
+                        "\"legendary\":false," +
+                        "\"name\":\"mewtwo\"," +
+                        "\"habitat\":\"unknown\"}"));
     }
 
     @Test
     void pokemonTranslatePathWorking() throws Exception {
-		PokemonSummary infoPokemon = new PokemonSummary("mewtwo", "mew two description", "unknown", false);
+        PokemonSummary infoPokemon = new PokemonSummary("mewtwo", "mew two description", "unknown", false);
 
-		when(pokemonInfoService.extractPokemon(any())).thenReturn(infoPokemon);
-		this.mockMvc
-				.perform(get("/pokemon/translated/mewtwo"))
-				.andDo(print())
-				.andExpect(status().isOk())
-				.andExpect(content().json("{\"description\":\"=====translated===\",\"legendary\":false,\"name\":\"mewtwo\",\"habitat\":\"unknown\",\"is_legendary\":false}"));
+        when(pokemonInfoService.extractPokemon(any())).thenReturn(infoPokemon);
+        this.mockMvc
+                .perform(get("/pokemon/translated/mewtwo"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\"description\":\"=====translated===\",\"legendary\":false,\"name\":\"mewtwo\",\"habitat\":\"unknown\"}"));
 
     }
 
