@@ -3,6 +3,8 @@ package com.dumitruc.training.pokemon;
 import com.dumitruc.training.pokemon.controllers.PokemonController;
 import com.dumitruc.training.pokemon.model.PokemonSummary;
 import com.dumitruc.training.pokemon.services.PokemonInfoServiceImpl;
+import com.dumitruc.training.pokemon.services.PokemonTranslatorService;
+import com.dumitruc.training.pokemon.services.PokemonTranslatorServiceImpl;
 import org.hamcrest.core.IsNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ class PokemonControllerTests {
 
     @MockBean
     private PokemonInfoServiceImpl pokemonInfoService;
+
+    @MockBean
+    private PokemonTranslatorServiceImpl pokemonTranslatorService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -59,14 +64,14 @@ class PokemonControllerTests {
 
     @Test
     void pokemonTranslatePathWorking() throws Exception {
-        PokemonSummary infoPokemon = new PokemonSummary("mewtwo", "mew two description", "unknown", false);
+        PokemonSummary infoPokemon = new PokemonSummary("mewtwo", "mew translated two description", "unknown", false);
 
-        when(pokemonInfoService.extractPokemon(any())).thenReturn(infoPokemon);
+        when(pokemonTranslatorService.translatePokemon(any())).thenReturn(infoPokemon);
         this.mockMvc
                 .perform(get("/pokemon/translated/mewtwo"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(content().json("{\"description\":\"=====translated===\",\"legendary\":false,\"name\":\"mewtwo\",\"habitat\":\"unknown\"}"));
+                .andExpect(content().json("{\"description\":\"mew translated two description\",\"legendary\":false,\"name\":\"mewtwo\",\"habitat\":\"unknown\"}"));
 
     }
 
