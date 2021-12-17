@@ -6,6 +6,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonObject;
 import org.apache.commons.io.FileUtils;
 import org.hamcrest.core.IsNull;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class PokemonDeserializerTest {
                 .deserialize(gson.fromJson(fileContent, JsonObject.class), PokemonSummary.class, mockJsonContext);
 
         assertThat(pokemonSummary.getName(), is("mewtwo"));
-        assertThat(pokemonSummary.getDescription(), is("It was created by\na scientist after\nyears of horrific\fgene splicing and\nDNA engineering\nexperiments."));
+        assertThat(pokemonSummary.getDescription(), is("It was created by a scientist after years of horrific\fgene splicing and DNA engineering experiments."));
         assertThat(pokemonSummary.getLegendary(), is(true));
         assertThat(pokemonSummary.getHabitat(), is("junit"));
     }
@@ -78,7 +79,7 @@ public class PokemonDeserializerTest {
                 .deserialize(gson.fromJson(fileContent, JsonObject.class), PokemonSummary.class, mockJsonContext);
 
         assertThat(pokemonSummary.getName(), is("mewtwo"));
-        assertThat(pokemonSummary.getDescription(), is("It was created by\na scientist after\nyears of horrific\fgene splicing and\nDNA engineering\nexperiments."));
+        assertThat(pokemonSummary.getDescription(), is("It was created by a scientist after years of horrific\fgene splicing and DNA engineering experiments."));
         assertThat(pokemonSummary.getLegendary(), is(true));
         assertThat(pokemonSummary.getHabitat(), is("rare"));
     }
@@ -96,5 +97,11 @@ public class PokemonDeserializerTest {
         assertThat(pokemonSummary.getName(), IsNull.nullValue());
         assertThat(pokemonSummary.getHabitat(), IsNull.nullValue());
         assertThat(pokemonSummary.getLegendary(), IsNull.nullValue());
+    }
+
+    @Test
+    @Disabled("implementation pending")
+    public void cleanDescriptionNewLine(){
+        System.out.println("test excplicitly the mapper for new line character cleaning");
     }
 }

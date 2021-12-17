@@ -21,7 +21,7 @@ public class PokemonControllerAdvice {
     @ExceptionHandler(UnableToObtainInfo.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public UnableToObtainInfoResponse handleCantOptainInfo(UnableToObtainInfo utoi){
+    public UnableToObtainInfoResponse handleCantObtainInfo(UnableToObtainInfo utoi){
         UnableToObtainInfoResponse unableToObtainInfoResponse =
                 new UnableToObtainInfoResponse(utoi.getMessage());
         return unableToObtainInfoResponse;
