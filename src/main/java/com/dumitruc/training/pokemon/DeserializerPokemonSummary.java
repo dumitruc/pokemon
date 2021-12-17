@@ -81,8 +81,10 @@ public class DeserializerPokemonSummary implements JsonDeserializer {
                     .filter(ft -> ft.getLanguage().getName().equalsIgnoreCase(Constants.DEFAULT_LANGUAGE_PREFIX)) //selecting english
                     .map(ft -> ft.getFlavorText())
                     .filter(d -> !d.isEmpty()) //using only items that have a description
+                    .map(s->cleanString(s))
                     .findFirst()
                     .orElse(null);
+
         } catch (Throwable ex) {
             logger.warn("Could not extract [description] info from response object");
         }
@@ -90,6 +92,11 @@ public class DeserializerPokemonSummary implements JsonDeserializer {
         return pokemonDescription;
     }
 
+    private String cleanString(String withAllSortsOfCharacters){
+        String cleannedString = withAllSortsOfCharacters.replaceAll("\n", " ");
+
+        return cleannedString;
+    }
 
 }
 
