@@ -4,6 +4,7 @@ import com.dumitruc.training.pokemon.model.PokemonSummary;
 import com.dumitruc.training.pokemon.services.ExternalCallsService;
 import com.dumitruc.training.pokemon.services.PokemonInfoServiceImpl;
 import org.apache.commons.io.FileUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -40,5 +41,17 @@ public class PokemonInfoServiceIntTest {
         when(externalCallsService.getUrl(any())).thenReturn(fileContent);
 
         assertThat(pokemonInfoService.extractPokemon(""), instanceOf(PokemonSummary.class));
+    }
+
+    @Test
+    @Disabled("to be implemented")
+    public void useEnglishVersionOfDescription(){
+        System.out.println("");
+    }
+
+    @Test
+    @Disabled("to be implemented")
+    public void useEnglishNonEmptyTranslation(){
+        System.out.println("");
     }
 }

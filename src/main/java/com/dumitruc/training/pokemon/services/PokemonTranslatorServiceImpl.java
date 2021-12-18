@@ -22,7 +22,7 @@ public class PokemonTranslatorServiceImpl implements PokemonTranslatorService {
 
         String translatedDescription = null;
         try {
-            if (isCavePokemon(pokemonOriginalSummary) && isLegendaryPokemon(pokemonOriginalSummary)) {
+            if (isCavePokemon(pokemonOriginalSummary) || isLegendaryPokemon(pokemonOriginalSummary)) {
                 translatedDescription = funTranslationsService.getYodaTranslations(pokemonOriginalSummary.getDescription());
             } else {
                 translatedDescription = funTranslationsService.getShakespeareTranslations(pokemonOriginalSummary.getDescription());

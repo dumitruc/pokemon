@@ -38,10 +38,10 @@ public class PokemonController {
         PokemonSummary pokemonSummary = null;
         try {
             pokemonSummary = pokemonInfoService.extractPokemon(name);
-        } catch (URISyntaxException e) {
-            logger.error("Could not encode the URI using the name provided: [{}]\n{}\n{}",
+        } catch (Exception e) {
+            logger.error("Could not obtain base info [{}]\n{}\n{}",
                     name,e.getMessage(),e);
-            throw new UnableToObtainInfo(e.getMessage());
+            throw new UnableToObtainInfo("Internal error could not process request");
         }
         return pokemonSummary;
     }

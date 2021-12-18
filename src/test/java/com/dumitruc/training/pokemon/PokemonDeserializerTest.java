@@ -102,6 +102,6 @@ public class PokemonDeserializerTest {
     @Test
     @Disabled("implementation pending")
     public void cleanDescriptionNewLine(){
-        System.out.println("test excplicitly the mapper for new line character cleaning");
+        System.out.println("test explicitly the mapper for new line character cleaning");
     }
 }
