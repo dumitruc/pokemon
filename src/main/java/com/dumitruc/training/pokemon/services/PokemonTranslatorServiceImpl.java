@@ -1,6 +1,7 @@
 package com.dumitruc.training.pokemon.services;
 
 import com.dumitruc.training.pokemon.model.PokemonSummary;
+import org.apache.commons.lang3.BooleanUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ public class PokemonTranslatorServiceImpl implements PokemonTranslatorService {
     }
 
     private Boolean isLegendaryPokemon(PokemonSummary pokemonOriginalSummary) {
-        return pokemonOriginalSummary.getLegendary();
+        return BooleanUtils.isTrue(pokemonOriginalSummary.getLegendary());
     }
 
     private boolean isCavePokemon(PokemonSummary pokemonOriginalSummary) {

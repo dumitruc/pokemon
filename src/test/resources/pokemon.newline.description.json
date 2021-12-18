@@ -1,0 +1,40 @@
+{
+  "evolves_from_species": null,
+  "flavor_text_entries": [
+    {
+      "flavor_text": "\n\n\n",
+      "language": {
+        "name": "us",
+        "url": "https://pokeapi.co/api/v2/language/9/"
+      },
+      "version": {
+        "name": "blue",
+        "url": "https://pokeapi.co/api/v2/version/2/"
+      }
+    },
+    {
+      "flavor_text": "It was created by\na scientist after\nyears of horrific\fgene splicing and\nDNA engineering\nexperiments.",
+      "language": {
+        "name": "us",
+        "url": "https://pokeapi.co/api/v2/language/9/"
+      },
+      "version": {
+        "name": "blue",
+        "url": "https://pokeapi.co/api/v2/version/2/"
+      }
+    },
+    {
+      "flavor_text": "this\nis\nnew\nline\nsplit\nstring",
+      "language": {
+        "name": "en",
+        "url": "https://pokeapi.co/api/v2/language/9/"
+      },
+      "version": {
+        "name": "red",
+        "url": "https://pokeapi.co/api/v2/version/1/"
+      }
+    }
+  ],
+  "is_legendary": true,
+  "name": "mewtwo"
+}

@@ -63,7 +63,7 @@ public class PokemonDeserializerTest {
         PokemonSummary pokemonSummary = deserializerPokemonSummary
                 .deserialize(gson.fromJson(basicJson, JsonObject.class), PokemonSummary.class, mockJsonContext);
 
-        assertThat(pokemonSummary,instanceOf(PokemonSummary.class));
+        assertThat(pokemonSummary, instanceOf(PokemonSummary.class));
         assertThat(pokemonSummary, IsNull.notNullValue());
         assertThat(pokemonSummary.getName(), is("mewtwo"));
         assertThat(pokemonSummary.getDescription(), IsNull.nullValue());
@@ -85,13 +85,13 @@ public class PokemonDeserializerTest {
     }
 
     @Test
-    public void badInfoNoNullPokemon(){
+    public void badInfoNoNullPokemon() {
         String basicJson = "{\"foo\":\"bar\"}";
 
         PokemonSummary pokemonSummary = deserializerPokemonSummary
                 .deserialize(gson.fromJson(basicJson, JsonObject.class), PokemonSummary.class, mockJsonContext);
 
-        assertThat(pokemonSummary,instanceOf(PokemonSummary.class));
+        assertThat(pokemonSummary, instanceOf(PokemonSummary.class));
         assertThat(pokemonSummary, IsNull.notNullValue());
         assertThat(pokemonSummary.getDescription(), IsNull.nullValue());
         assertThat(pokemonSummary.getName(), IsNull.nullValue());
@@ -99,9 +99,53 @@ public class PokemonDeserializerTest {
         assertThat(pokemonSummary.getLegendary(), IsNull.nullValue());
     }
 
+    /* Ideally for this test I'll create a small input wrapper, so that is clear what different input affects the output,
+rather than how it currently is and 3 tests just use same file.
+*/
     @Test
-    @Disabled("implementation pending")
-    public void cleanDescriptionNewLine(){
-        System.out.println("test explicitly the mapper for new line character cleaning");
+    public void cleanDescriptionNewLine() throws IOException {
+
+        String path = this.getClass().getClassLoader().getResource("./pokemon.newline.description.json").getPath();
+        String fileContent = FileUtils.readFileToString(new File(path), StandardCharsets.UTF_8);
+
+        JsonObject jsonElement = gson.fromJson(fileContent, JsonObject.class);
+
+        PokemonSummary pokemonSummary = deserializerPokemonSummary
+                .deserialize(jsonElement, PokemonSummary.class, mockJsonContext);
+
+        assertThat(pokemonSummary.getDescription(), is("this is new line split string"));
+
+    }
+
+    /* Ideally for this test I'll create a small input wrapper, so that is clear what different input affects the output,
+    rather than how it currently is and 3 tests just use same file.
+     */
+    @Test
+    public void useEnglishVersionOfDescription() throws IOException {
+        String path = this.getClass().getClassLoader().getResource("./pokemon.newline.description.json").getPath();
+        String fileContent = FileUtils.readFileToString(new File(path), StandardCharsets.UTF_8);
+
+        JsonObject jsonElement = gson.fromJson(fileContent, JsonObject.class);
+
+        PokemonSummary pokemonSummary = deserializerPokemonSummary
+                .deserialize(jsonElement, PokemonSummary.class, mockJsonContext);
+
+        assertThat(pokemonSummary.getDescription(), is("this is new line split string"));
+    }
+
+    /* Ideally for this test I'll create a small input wrapper, so that is clear what different input affects the output,
+    rather than how it currently is and 3 tests just use same file.
+     */
+    @Test
+    public void useEnglishNonEmptyTranslation() throws IOException {
+        String path = this.getClass().getClassLoader().getResource("./pokemon.newline.description.json").getPath();
+        String fileContent = FileUtils.readFileToString(new File(path), StandardCharsets.UTF_8);
+
+        JsonObject jsonElement = gson.fromJson(fileContent, JsonObject.class);
+
+        PokemonSummary pokemonSummary = deserializerPokemonSummary
+                .deserialize(jsonElement, PokemonSummary.class, mockJsonContext);
+
+        assertThat(pokemonSummary.getDescription(), is("this is new line split string"));
     }
 }

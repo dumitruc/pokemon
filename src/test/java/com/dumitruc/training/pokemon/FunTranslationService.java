@@ -1,69 +1,102 @@
 package com.dumitruc.training.pokemon;
 
+import com.dumitruc.training.pokemon.model.PokemonSummary;
 import com.dumitruc.training.pokemon.services.ExternalCallsServiceImpl;
 import com.dumitruc.training.pokemon.services.FunTranslationsServiceImpl;
-import org.junit.jupiter.api.Disabled;
+import com.dumitruc.training.pokemon.services.PokemonTranslatorServiceImpl;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@AutoConfigureMockMvc
 public class FunTranslationService {
-
-    @Autowired
-    FunTranslationsServiceImpl funTranslationsService;
 
     @MockBean
     ExternalCallsServiceImpl externalCallsService;
 
-    @Mock
-    MockMvc mockMvc;
+    @MockBean
+    FunTranslationsServiceImpl funTranslationsService;
+
+    @Autowired
+    PokemonTranslatorServiceImpl pokemonTranslatorService;
+
+
+    private static final String YODA_TRANSLATED = "yoda-translated";
+    private static final String SHAKESPEARE_TRANSLATED = "shakespeare-translated";
+    private static final String ORIGINAL_DESCRIPTION = "unit-test-description";
 
     @Test
-    public void doSomething() throws Exception {
+    public void whenCaveHabitatYodaTranslation() throws Exception {
 
-        //Initiate a pokemonSummary
-        //For each logical flow change the pokemonInfoAccordingly
-        //          - cave, legendary , make logical table
+        initFunTRanslationService();
+        PokemonSummary pokemonSummary = new PokemonSummary("unit-test", ORIGINAL_DESCRIPTION, "cave", null);
 
-//        when(externalCallsService.getUrl())
+        String actualTranslatedDescription = pokemonTranslatorService.translatePokemon(pokemonSummary).getDescription();
 
-        String whoAreYou = funTranslationsService.getYodaTranslations("who are you");
-
-        System.out.println("whoAreYou = " + whoAreYou);
-
+        assertThat(actualTranslatedDescription, is(YODA_TRANSLATED));
     }
 
     @Test
-    @Disabled("to be implemeneted")
-    public void whenCaveHabitatYodaTranslation(){
-        System.out.println("");
+    public void whenLegendaryYodaTranslation() throws Exception {
+        initFunTRanslationService();
+        PokemonSummary pokemonSummary = new PokemonSummary("unit-test", ORIGINAL_DESCRIPTION, "grasslands", true);
+
+        String actualTranslatedDescription = pokemonTranslatorService.translatePokemon(pokemonSummary).getDescription();
+
+        assertThat(actualTranslatedDescription, is(YODA_TRANSLATED));
     }
 
     @Test
-    @Disabled("to be implemeneted")
-    public void whenLegendaryYodaTranslation(){
-        System.out.println("");
+    public void whenCantTranslateOriginal() throws Exception {
+        when(funTranslationsService.getYodaTranslations(any()))
+                .thenThrow(new Exception("can't translate YODA"));
+        when(funTranslationsService.getShakespeareTranslations(any()))
+                .thenThrow(new Exception("can't translate Shakespeare"));
+
+
+        PokemonSummary pokemonSummary = new PokemonSummary("unit-test", ORIGINAL_DESCRIPTION, "grasslands", false);
+
+        String actualTranslatedDescription = pokemonTranslatorService.translatePokemon(pokemonSummary).getDescription();
+
+        assertThat(actualTranslatedDescription, is(ORIGINAL_DESCRIPTION));
     }
 
-
     @Test
-    @Disabled("to be implemeneted")
-    public void whenCantTranslateOriginal(){
-        System.out.println("");
+    public void whenEmptyTranslateOriginal() throws Exception {
+        when(funTranslationsService.getYodaTranslations(any()))
+                .thenReturn("");
+        when(funTranslationsService.getShakespeareTranslations(any()))
+                .thenReturn("");
+
+
+        PokemonSummary pokemonSummary = new PokemonSummary("unit-test", ORIGINAL_DESCRIPTION, "cave", true);
+
+        String actualTranslatedDescription = pokemonTranslatorService.translatePokemon(pokemonSummary).getDescription();
+
+        assertThat(actualTranslatedDescription, is(ORIGINAL_DESCRIPTION));
     }
 
     @Test
-    @Disabled("to be implemeneted")
-    public void whenNotLegendaryNotCaveShakespeareTranslation(){
-        System.out.println("");
+    public void whenNotLegendaryNotCaveShakespeareTranslation() throws Exception {
+        initFunTRanslationService();
+        PokemonSummary pokemonSummary = new PokemonSummary("unit-test", ORIGINAL_DESCRIPTION, "grasslands", false);
+
+        String actualTranslatedDescription = pokemonTranslatorService.translatePokemon(pokemonSummary).getDescription();
+
+        assertThat(actualTranslatedDescription, is(SHAKESPEARE_TRANSLATED));
+    }
+
+    private void initFunTRanslationService() throws Exception {
+        when(funTranslationsService.getYodaTranslations(any()))
+                .thenReturn(YODA_TRANSLATED);
+        when(funTranslationsService.getShakespeareTranslations(any()))
+                .thenReturn(SHAKESPEARE_TRANSLATED);
     }
 
 

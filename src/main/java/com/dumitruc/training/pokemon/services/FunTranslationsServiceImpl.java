@@ -50,7 +50,7 @@ public class FunTranslationsServiceImpl implements FunTranslationsService {
         String translatedResponse = externalCallsService.getUrl(buildUri(srcString, shakespeareUrl));
         String translatedValue = extractTranslatedValue(translatedResponse);
 
-        if (translatedValue == null && translatedValue.isEmpty()) {
+        if (translatedValue == null || translatedValue.isEmpty()) {
             translatedValue = PokemonInfoServiceUtils.readableTextFromUrl(srcString);
         }
         return translatedValue;
