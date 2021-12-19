@@ -5,9 +5,12 @@ import com.dumitruc.training.pokemon.services.ExternalCallsServiceImpl;
 import com.dumitruc.training.pokemon.services.FunTranslationsServiceImpl;
 import com.dumitruc.training.pokemon.services.PokemonTranslatorServiceImpl;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -16,9 +19,6 @@ import static org.mockito.Mockito.when;
 
 @SpringBootTest
 public class FunTranslationService {
-
-    @MockBean
-    ExternalCallsServiceImpl externalCallsService;
 
     @MockBean
     FunTranslationsServiceImpl funTranslationsService;
@@ -54,9 +54,9 @@ public class FunTranslationService {
 
     @Test
     public void whenCantTranslateOriginal() throws Exception {
-        when(funTranslationsService.getYodaTranslations(any()))
+        when(funTranslationsService.getYodaTranslations("unit-test"))
                 .thenThrow(new Exception("can't translate YODA"));
-        when(funTranslationsService.getShakespeareTranslations(any()))
+        when(funTranslationsService.getShakespeareTranslations("unit-test"))
                 .thenThrow(new Exception("can't translate Shakespeare"));
 
 

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.NotNull;
-import java.net.URISyntaxException;
 
 @RestController
 public class PokemonController {
@@ -36,12 +35,12 @@ public class PokemonController {
     @RequestMapping("/pokemon/{name}")
     public PokemonSummary pokemonInfo(@NotNull @PathVariable String name) {
         PokemonSummary pokemonSummary = null;
-        logger.info("Retrieve base info for: {}",name);
+        logger.info("Retrieve base info for: {}", name);
         try {
             pokemonSummary = pokemonInfoService.extractPokemon(name);
         } catch (Exception e) {
             logger.error("Could not obtain base info [{}]\n{}\n{}",
-                    name,e.getMessage(),e);
+                    name, e.getMessage(), e);
             throw new UnableToObtainInfo("Internal error could not process request");
         }
         return pokemonSummary;
@@ -50,12 +49,12 @@ public class PokemonController {
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping("/pokemon/translated/{name}")
     public PokemonSummary pokemonTranslated(@NotNull @PathVariable String name) {
-        logger.info("Retrieve translation for: {}",name);
+        logger.info("Retrieve translation for: {}", name);
         PokemonSummary pokemonSummary = pokemonInfo(name);
         try {
             pokemonSummary = pokemonTranslatorService.translatePokemon(pokemonSummary);
         } catch (Exception e) {
-            logger.error("Could not translate pokemon.\n{}\n{}",e.getMessage(),e);
+            logger.error("Could not translate pokemon.\n{}\n{}", e.getMessage(), e);
             throw new UnableToTranslate("Could not translate pokemon.");
         }
         return pokemonSummary;
