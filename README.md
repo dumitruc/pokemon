@@ -1,3 +1,4 @@
+[![Java CI with Maven](https://github.com/dumitruc/pokemon/actions/workflows/maven.yml/badge.svg)](https://github.com/dumitruc/pokemon/actions/workflows/maven.yml)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=dumitruc_pokemon&metric=bugs)](https://sonarcloud.io/summary/new_code?id=dumitruc_pokemon)
 
 

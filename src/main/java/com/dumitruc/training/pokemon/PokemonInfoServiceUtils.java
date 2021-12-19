@@ -17,8 +17,7 @@ public class PokemonInfoServiceUtils {
         try {
             encodedString = URLEncoder.encode(input, StandardCharsets.UTF_8.toString());
         } catch (UnsupportedEncodingException e) {
-            logger.warn("could not URI encode provided text: {}", input);
-            e.printStackTrace();
+            logger.warn("could not URI encode provided text: {}\n{}", input,e);
         }
         return encodedString;
     }
@@ -28,8 +27,7 @@ public class PokemonInfoServiceUtils {
         try {
             decodedString = URLDecoder.decode(input, StandardCharsets.UTF_8.toString());
         } catch (UnsupportedEncodingException e) {
-            logger.warn("could not URI decode provided text: {}", input);
-            e.printStackTrace();
+            logger.warn("could not URI decode provided text: {}\n{}", input,e);
         }
         return decodedString;
     }
