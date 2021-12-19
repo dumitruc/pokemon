@@ -1,4 +1,5 @@
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dumitruc_pokemon&metric=coverage)](https://sonarcloud.io/summary/new_code?id=dumitruc_pokemon)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=dumitruc_pokemon&metric=bugs)](https://sonarcloud.io/summary/new_code?id=dumitruc_pokemon)
+
 
 
 # About

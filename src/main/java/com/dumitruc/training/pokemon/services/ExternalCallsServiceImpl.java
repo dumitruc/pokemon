@@ -1,6 +1,7 @@
 package com.dumitruc.training.pokemon.services;
 
 import com.dumitruc.training.pokemon.exceptions.UnableToObtainInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +24,11 @@ public class ExternalCallsServiceImpl implements ExternalCallsService {
 
         try {
             responseEntity = restTemplate.getForEntity(uri, String.class);
-        }catch(HttpClientErrorException ex){
-            logger.error("{}\n[{}]\n{}",ex.getMessage(),uri,ex);
-            throw new UnableToObtainInfo(ex.getMessage());
         }catch(Exception ex){
             logger.error("{}\n{}",ex.getMessage(),ex);
             throw new UnableToObtainInfo("Error accessing external service.");
         }
 
-        return responseEntity.getBody().toString();
+        return StringUtils.trim(responseEntity.getBody());
     }
 }
