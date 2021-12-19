@@ -1,4 +1,5 @@
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dumitruc_pokemon&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dumitruc_pokemon)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dumitruc_pokemon&metric=coverage)](https://sonarcloud.io/summary/new_code?id=dumitruc_pokemon)
+
 
 # About
 Project init using spring boot [initializr](https://start.spring.io/). Front API service to get some fun info about pokemons.
