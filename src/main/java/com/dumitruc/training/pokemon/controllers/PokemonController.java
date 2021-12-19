@@ -36,6 +36,7 @@ public class PokemonController {
     @RequestMapping("/pokemon/{name}")
     public PokemonSummary pokemonInfo(@NotNull @PathVariable String name) {
         PokemonSummary pokemonSummary = null;
+        logger.info("Retrieve base info for: {}",name);
         try {
             pokemonSummary = pokemonInfoService.extractPokemon(name);
         } catch (Exception e) {
@@ -49,6 +50,7 @@ public class PokemonController {
     @ResponseStatus(value = HttpStatus.OK)
     @RequestMapping("/pokemon/translated/{name}")
     public PokemonSummary pokemonTranslated(@NotNull @PathVariable String name) {
+        logger.info("Retrieve translation for: {}",name);
         PokemonSummary pokemonSummary = pokemonInfo(name);
         try {
             pokemonSummary = pokemonTranslatorService.translatePokemon(pokemonSummary);
