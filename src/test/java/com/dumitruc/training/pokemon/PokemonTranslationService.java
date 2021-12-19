@@ -1,16 +1,12 @@
 package com.dumitruc.training.pokemon;
 
 import com.dumitruc.training.pokemon.model.PokemonSummary;
-import com.dumitruc.training.pokemon.services.ExternalCallsServiceImpl;
 import com.dumitruc.training.pokemon.services.FunTranslationsServiceImpl;
 import com.dumitruc.training.pokemon.services.PokemonTranslatorServiceImpl;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.boot.test.mock.mockito.SpyBean;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -18,7 +14,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-public class FunTranslationService {
+public class PokemonTranslationService {
 
     @MockBean
     FunTranslationsServiceImpl funTranslationsService;
@@ -53,6 +49,16 @@ public class FunTranslationService {
     }
 
     @Test
+    public void whenNotLegendaryNotCaveShakespeareTranslation() throws Exception {
+        initFunTRanslationService();
+        PokemonSummary pokemonSummary = new PokemonSummary("unit-test", ORIGINAL_DESCRIPTION, "grasslands", false);
+
+        String actualTranslatedDescription = pokemonTranslatorService.translatePokemon(pokemonSummary).getDescription();
+
+        assertThat(actualTranslatedDescription, is(SHAKESPEARE_TRANSLATED));
+    }
+
+    @Test
     public void whenCantTranslateOriginal() throws Exception {
         when(funTranslationsService.getYodaTranslations("unit-test"))
                 .thenThrow(new Exception("can't translate YODA"));
@@ -80,16 +86,6 @@ public class FunTranslationService {
         String actualTranslatedDescription = pokemonTranslatorService.translatePokemon(pokemonSummary).getDescription();
 
         assertThat(actualTranslatedDescription, is(ORIGINAL_DESCRIPTION));
-    }
-
-    @Test
-    public void whenNotLegendaryNotCaveShakespeareTranslation() throws Exception {
-        initFunTRanslationService();
-        PokemonSummary pokemonSummary = new PokemonSummary("unit-test", ORIGINAL_DESCRIPTION, "grasslands", false);
-
-        String actualTranslatedDescription = pokemonTranslatorService.translatePokemon(pokemonSummary).getDescription();
-
-        assertThat(actualTranslatedDescription, is(SHAKESPEARE_TRANSLATED));
     }
 
     private void initFunTRanslationService() throws Exception {
