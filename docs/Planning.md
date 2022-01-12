@@ -22,7 +22,7 @@ When receiving results from pokemon info service sometimes there are bad charact
 A more detailed exception handling, with more informational messages, for now just wrapper to have the control and hide internal errors for details.
 ## JAR or WAR 
 Depending on production deploy strategy might change the build to a WAR file
-## Add UAT testing to the pipeline
+## Add UAT/Operation testing to the pipeline
 Add e2e testing where service is tested as a whole (i.e. deployd jar)
 ## Monitoring
 Add solution for service monitoring, health and performance.
